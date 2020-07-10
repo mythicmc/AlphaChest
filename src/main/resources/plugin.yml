@@ -1,0 +1,30 @@
+name: AlphaChest
+main: info.mythicmc.alphachest.AlphaChest
+version: '2.0.0'
+authors: ['Trace Bachi (tracebachi@yahoo.com, BigBossZee)', 'Astelon']
+description: Plugin that allows you to have virtual private chests.
+api-version: '1.13'
+
+commands:
+  chest:
+    description: Base command for managing virtual chests.
+  craft:
+    aliases: [workbench]
+    description: Opens a virtual workbench.
+    permission-message: You are not allowed to use this command.
+    permission: alphachest.craft
+
+permissions:
+  alphachest.chest:
+    description: Allows accessing your own virtual chest.
+  alphachest.clearchest:
+    description: Allows clearing virtual chests.
+  alphachest.craft:
+    description: Gives access to the virtual workbench.
+
+  alphachest.admin:
+    description: Allows you to open and interact with someone else's virtual chest.
+    default: op
+  alphachest.creative:
+    description: Allows openning virtual chests in creative mode.
+    default: op
