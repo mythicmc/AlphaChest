@@ -1,6 +1,6 @@
 name: AlphaChest
 main: info.mythicmc.alphachest.AlphaChest
-version: '2.0.0'
+version: '2.0.1'
 authors: ['Trace Bachi (tracebachi@yahoo.com, BigBossZee)', 'Astelon']
 description: Plugin that allows you to have virtual private chests.
 api-version: '1.13'
