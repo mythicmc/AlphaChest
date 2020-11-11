@@ -41,7 +41,7 @@ public class InventoryListener implements Listener {
                                 ", there is a risk that it could be duplicated!");
                     }
                 });
-                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.removeChest(playerName));
+                Bukkit.getScheduler().runTask(plugin, () -> plugin.removeChest(playerName));
             }
         }
     }
