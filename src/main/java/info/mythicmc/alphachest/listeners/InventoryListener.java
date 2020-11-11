@@ -25,7 +25,7 @@ public class InventoryListener implements Listener {
         String title = event.getView().getTitle();
         if (title.startsWith(AlphaChest.CHEST_PREFIX)) {
             Inventory inventory = event.getInventory();
-            if (inventory.getViewers().size() == 1) {
+            if (inventory.getViewers().size() <= 1) {
                 String playerName = title.substring(AlphaChest.CHEST_PREFIX.length());
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                     File folder = plugin.getChestsFolder();
@@ -41,6 +41,7 @@ public class InventoryListener implements Listener {
                                 ", there is a risk that it could be duplicated!");
                     }
                 });
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.removeChest(playerName));
             }
         }
     }

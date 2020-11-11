@@ -67,6 +67,10 @@ public class AlphaChest extends JavaPlugin {
         chestMap.put(name, inventory);
     }
 
+    public void removeChest(String name) {
+        chestMap.remove(name);
+    }
+
     public List<?> getChestContents(String fileName) {
         File folder = getChestsFolder();
         if (folder == null) {
