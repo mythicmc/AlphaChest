@@ -106,7 +106,6 @@ public class ChestCommand implements CommandExecutor {
                             plugin.removeChest(name);
                             return;
                         } catch (Exception e) {
-                            e.printStackTrace();
                             player.sendMessage("Slot " + i + " in the inventory of " + name + " is invalid!");
                         }
                     } else player.sendMessage("Slot " + i + " in the inventory of " + name + " is invalid!");

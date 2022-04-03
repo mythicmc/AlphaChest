@@ -44,8 +44,9 @@ public class InventoryListener implements Listener {
                         }
                         result.set("items", items);
                     } catch (NoSuchMethodError e) {
-                        plugin.getLogger().severe("Looks like this isn't Paper, falling back to YamlConfiguration." +
-                                " It is recommended to use Paper for chests to upgrade across versions correctly.");
+                        plugin.getLogger().warning("Looks like this isn't Paper 1.15+, falling back" +
+                                " to YamlConfiguration. It is recommended to use Paper 1.15+ for /chests" +
+                                " to upgrade across versions correctly.");
                         result.set("items", inventory.getContents());
                     }
                     try {
