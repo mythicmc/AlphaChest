@@ -7,10 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.Base64;
 
 public class InventoryListener implements Listener {
 
@@ -33,7 +35,19 @@ public class InventoryListener implements Listener {
                         folder = plugin.createChestsFolder();
                     File target = new File(folder, playerName + ".chest.yml");
                     YamlConfiguration result = new YamlConfiguration();
-                    result.set("items", inventory.getContents());
+                    try {
+                        ArrayList<String> items = new ArrayList<>();
+                        for (ItemStack item : inventory.getContents()) {
+                            if (item != null) {
+                                items.add(Base64.getEncoder().encodeToString(item.serializeAsBytes()));
+                            } else items.add(null);
+                        }
+                        result.set("items", items);
+                    } catch (NoSuchMethodError e) {
+                        plugin.getLogger().severe("Looks like this isn't Paper, falling back to YamlConfiguration." +
+                                " It is recommended to use Paper for chests to upgrade across versions correctly.");
+                        result.set("items", inventory.getContents());
+                    }
                     try {
                         result.save(target);
                     } catch (IOException e) {

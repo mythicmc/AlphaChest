@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
+import java.util.Base64;
 import java.util.List;
 
 public class ChestCommand implements CommandExecutor {
@@ -93,10 +94,22 @@ public class ChestCommand implements CommandExecutor {
         if (inventoryContents != null) {
             for (int i = 0; i < inventoryContents.size(); i++) {
                 if (inventoryContents.get(i) != null) {
-                    if (inventoryContents.get(i) instanceof ItemStack)
+                    if (inventoryContents.get(i) instanceof ItemStack) {
                         inventory.setItem(i, (ItemStack) inventoryContents.get(i));
-                    else
-                        player.sendMessage("Slot " + i + " in the inventory of " + name + " is invalid!");
+                    } else if (inventoryContents.get(i) instanceof String) {
+                        try {
+                            byte[] base64Decoded = Base64.getDecoder().decode((String) inventoryContents.get(i));
+                            inventory.setItem(i, ItemStack.deserializeBytes(base64Decoded));
+                        } catch (NoSuchMethodError e) {
+                            plugin.getLogger().severe("Failed to deserialize item with Paper API! Not opening chest for safety.");
+                            player.sendMessage("This chest is incompatible with this server software! Not opening chest for safety.");
+                            plugin.removeChest(name);
+                            return;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            player.sendMessage("Slot " + i + " in the inventory of " + name + " is invalid!");
+                        }
+                    } else player.sendMessage("Slot " + i + " in the inventory of " + name + " is invalid!");
                 }
             }
         }
